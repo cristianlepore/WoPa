@@ -1,0 +1,51 @@
+\documentclass[runningheads,a4paper]{llncs}
+
+\input{styles.tex}
+\input{macro.tex}
+
+\usepackage{ulem}
+\newcommand{\romain}[2]{\textcolor{red}{[#1] -- $\rhd$ #2 $\lhd$}}
+\newcommand{\romainadd}[1]{\textcolor{red}{[#1]}}
+\newcommand{\romainchange}[2]{\textcolor{red}{\sout{#1} [#2]}}
+
+\newtoggle{anonymous}
+\toggletrue{anonymous}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {2.25ex \@plus 1ex \@minus .2ex}%
+  {-0.75em}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
+
+\begin{document}
+
+\title{A survey on legal and technical aspects of Self-Sovereign Identity}
+
+\iftoggle{anonymous}{
+  \author{\vspace{-15mm}}
+  \institute{}
+  \authorrunning{Anonymous Author(s)}
+}
+{
+Name Last-name\inst{1}
+}
+
+\institute{
+University
+}
+
+\Crefname{figure}{Fig.\@}{Figures}%
+\Crefname{section}{\S\!\!\@}{Sections}%
+\Crefname{appendix}{\S\!\!\@}{Appendices}%
+
+\maketitle
+
+\linenumbers
+
+\input{sections/abstract}
+
+\bibliographystyle{splncs04}
+\bibliography{biblio}
+
+\end{document}

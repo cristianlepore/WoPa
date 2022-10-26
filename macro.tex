@@ -1,0 +1,661 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               GENERAL MACROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\HSLtag}{\scalebox{1.25}{%
+  \begin{tikzpicture}
+  \draw (0.1,0.2) -- (0.2,0.115) -- (0.3,0.2) ;
+  %
+  \draw (0.1,0.2) -- (0.15,0.1) ;
+  \draw (0.3,0.2) -- (0.25,0.1) ;
+  %
+  \draw (0.12,0.1) -- (0.2,0.05) -- (0.28,0.1) ;
+  %
+  \draw (0.2,0) circle (0.12) ; 
+  \draw (0.16,0.04) circle (0.01) ;
+  \draw (0.24,0.04) circle (0.01) ;
+  \draw (0.15,-0.07) -- (0.25,-0.07) ;
+  \end{tikzpicture}
+}}
+
+\newcommand{\HSLbox}{\rule{1ex}{1ex}}
+
+\newcommand{\HSL}[1][]{\vbox{\medskip\noindent\hrulefill \\[5pt]
+  \HSLtag \hspace{\stretch{1}}HIC SUNT
+  LEONES \; {#1}\hspace{\stretch{1}} \HSLtag \\ \smallskip\noindent\hrulefill \\}}
+
+%%% If/then check for empty strings (requires xifthen for \ifempty)
+\newcommand{\ifempty}[3]{%
+  \ifthenelse{\isempty{#1}}{#2}{#3}%
+}
+
+\newcommand{\hidden}[1]{}
+
+\newcommand{\redrule}[2]{
+\prooftree
+{#1}
+\justifies
+{#2}
+\endprooftree
+}
+
+\newcommand{\namedef}[2]
+{\begin{center}\begin{tabular}{lr}
+      {$#2$}
+      & \qquad
+      {\emph{#1}}
+    \end{tabular}\end{center}
+}
+
+\newcommand{\qedef}{\ensuremath{\diamond}}
+\newenvironment{nscenter}
+ {\parskip=0pt\par\nopagebreak\centering}
+ {\parskip=2pt\par\noindent} % \ignorespacesafterend
+
+% \newcommand{\shepherd}[1]{\textcolor{magenta}{#1}}
+\newenvironment{shepherd}{\iftoggle{shepherd}{\color{magenta}}{}}{}
+
+% \newcommand{\bvec}[1]{\boldmath\ensuremath{#1}}
+\newcommand{\bvec}[1]{\mathbold{\ensuremath{#1}}}
+
+% \newcommand{\eqdef}{\mathrel{\overset{\it def}{=}}}
+\newcommand{\eqdef}{\mathrel{\triangleq}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               MACROS FOR SETS AND SEQUENCES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \renewcommand{\vec}[1]{\ensuremath{\mathit{\mathbf{#1}}}}
+% \renewcommand{\vec}[1]{\ensuremath{\textit{\textbf{#1}}}}
+\newcommand{\relR}{\mathcal{R}}
+
+\newcommand{\Real}[1]{\mathrm{Real}}
+\newcommand{\tuple}[1]{\ensuremath{\langle {#1} \rangle}}
+
+\newcommand{\codefont}{\fontsize{10}{10}\selectfont}
+\newcommand{\code}[1]{{\tt\codefont {#1}}}
+
+% for braces in alltt mode
+\newcommand{\braceleft}{\symbol{`\{}}
+\newcommand{\braceright}{\symbol{`\}}}
+\newcommand{\angleleft}{\symbol{`\<}}
+\newcommand{\angleright}{\symbol{`\<}}
+% \newcommand{\mytilde}{\scalebox{0.85}{\url{~}}}
+\newcommand{\mytilde}{\raisebox{-3pt}{{\symbol{`\~}}}}
+\newcommand{\mydash}{\raisebox{0pt}{{\symbol{`\-}}}}
+
+\newcommand\bslash{\symbol{`\\}}
+\newcommand{\etc}{etc.\@\xspace}
+\newcommand{\Eg}{E.g.\@\xspace}
+\newcommand{\eg}{e.g.\@\xspace}
+\newcommand{\ie}{i.e.\@\xspace}
+\newcommand{\wrt}{w.r.t.\@\xspace}
+
+\newcommand{\keyterm}[1]{\textbf{\emph{#1}}}%
+
+\newcommand{\emptyseq}{\varepsilon}
+\newcommand{\idx}[2]{{#1}_{#2}}
+\newcommand{\fst}{\mathit{fst}}
+\newcommand{\snd}{\mathit{snd}}
+
+% \newcommand{\max}[1]{\operatorname{max}({#1})}
+% \newcommand{\min}[1]{\operatorname{cod}({#1})}
+
+\newcommand{\fv}[1]{\ifempty{#1}{\operatorname{fv}}{\operatorname{fv}(#1)}}
+\newcommand{\mmdef}{\mbox{$\;\stackrel{\textrm{\tiny def}}{=}\;$}}
+\newcommand{\mmid}{\,\|\,}
+
+\newcommand{\den}[2][]{#2_{#1}} % denotations
+\newcommand{\denV}[1][]{\den[#1]{\nu}}
+\newcommand{\denVi}[1][]{\den[#1]{\nu'}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               MACROS FOR THEOREMS AND PROOFS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{proofof}[2][]{%
+  \ifempty{#1}
+  {\subsection*{Proof of~\Cref{#2}}}
+  {\subsection*{Proof of~\Cref{#2} ({#1})}}
+  \label{#2-proof}
+  % Also re-print the theorem statement
+  % FIXME: disabled due to apparent bug in thmools + hyperref (Ubuntu 12.04)
+  % FIXME: it works without the final star, but references get messed up
+  %\csname #1\endcsname
+  % \begin{proof}
+  }%
+  % {\end{proof}}
+  {}
+
+
+\def\finex{{\unskip\nobreak\hfil
+\penalty50\hskip1em\null\nobreak\hfil$\blacklozenge$
+\parfillskip=0pt\finalhyphendemerits=0\endgraf}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               MACROS FOR CRYPTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \newcommand{\sig}[2]{\mathit{sig}_{#1}({#2})}
+% \newcommand{\ver}[3]{\mathit{ver}_{#1}({#2},{#3})}
+
+\newcommand{\sig}[3][]{\mathit{sig}^{#1}_{#2}\ifempty{#3}{}{({#3})}}
+\newcommand{\ver}[3]{\mathit{ver}_{#1}({#2},{#3})}
+
+\newcommand{\PK}[1]{k^p_{#1}}
+\newcommand{\SK}[1]{k^s_{#1}}
+
+\newcommand{\key}[2]{\ensuremath{K_{#1}({#2})}}
+\newcommand{\Key}[1]{\ensuremath{\vec{K}({#1})}}
+\newcommand{\self}{\bullet}
+
+\newcommand{\secret}[2]{s_{#1}^{#2}}
+\newcommand{\hash}[2]{h_{#1}^{#2}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               MACROS FOR BITCOIN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\BTC}{\textup{%
+  \leavevmode
+  \vtop{\offinterlineskip %\bfseries
+    \setbox0=\hbox{B}%
+    \setbox2=\hbox to\wd0{\hfil\hskip-.03em
+    \vrule height .3ex width .15ex\hskip .08em
+    \vrule height .3ex width .15ex\hfil}
+    \vbox{\copy2\box0}\box2}}}
+
+\newcommand{\txScaling}{0.9}
+
+% \def\colorTx{\color{ForestGreen}}
+\def\txColor{\color{MidnightBlue}}
+\newcommand{\txFmt}[1]{{\txColor{\sf #1}}}
+
+\newcommand{\tx}[2][]{\txFmt{#2}_{\txColor{#1}}}
+\newcommand{\txT}[1][]{\tx[#1]{T}}
+\newcommand{\txTi}[1][]{\txFmt{T'_{\txColor{{\it #1}}}}}
+\newcommand{\txTii}[1][]{\txFmt{T''_{\txColor{\it {#1}}}}}
+\newcommand{\txf}[1][]{\tx[#1]{f}} % transaction field
+% \newcommand{\txf}[1][]{\txFmt{{f}_{#1}}}  
+\newcommand{\txR}[1][]{\txFmt{T^{\it r}_{\it #1}}}
+% \newcommand{\txR}[1][]{\tx[#1]{T^r}}
+
+\newcommand{\txscript}{\mathit{script}}
+\newcommand{\txval}{\mathit{val}}
+\newcommand{\utxo}[1][]{\mathit{UTXO}_{#1}}
+
+\newcommand{\txsigname}{{\txColor{\sf sig}}}
+\newcommand{\txvername}{{\txColor{\sf ver}}}
+\newcommand{\txsig}[3][]{\txsigname^{#1}_{#2}\ifempty{#3}{}{({#3})}}
+\newcommand{\txver}[6]{\ifempty{#3}{\ifempty{#4}{\txvername_{#1}({#2},{#5},{#6})}
+			{\txvername_{#1}^{{#3},{#4}}({#2},{#5},{#6})}}
+		{\txvername_{#1}^{{#3},{#4}}({#2},{#5},{#6})}}
+
+\newcommand{\stdtxT}[2]{\txFmt{\widetilde{T}^{\it #2}_{#1}}}
+
+\newcommand{\uswtxT}[1][]{\tx[#1]{\tilde{T}}}
+\newcommand{\uswtxTi}[1][]{\txFmt{\tilde{T}'_{\txColor{\it #1}}}}
+
+\newcommand{\txSubs}[1][]{\txFmt{\Sigma}_{\txColor{#1}}}
+\newcommand{\txsubs}[3][]{\{{#2}\ifempty{#1}{}{({#1})} \mapsto {#3}\}}
+\newcommand{\txsubsneq}[3][]{\{{#2}\ifempty{#1}{}{(\neq{#1})} \mapsto {#3}\}}
+\newcommand{\txsubslt}[3][]{\{{#2}\ifempty{#1}{}{(<#1)} \mapsto {#3}\}}
+\newcommand{\txsubsgt}[3][]{\{{#2}\ifempty{#1}{}{(>#1)} \mapsto {#3}\}}
+
+\newcommand{\txIn}[2][]{{\sf in}\ifempty{#1}{\ifempty{#2}{}{: {#2}}}{({#1})\ifempty{#2}{}{: {#2}}}}
+\newcommand{\txWit}[2][]{{\sf wit}\ifempty{#1}{\ifempty{#2}{}{: {#2}}}{({#1})\ifempty{#2}{}{: {#2}}}}
+\newcommand{\txOut}[2][]{{\sf out}\ifempty{#1}{\ifempty{#2}{}{: {#2}}}{({#1})\ifempty{#2}{}{: {#2}}}}
+% \newcommand{\txOut}[3][]{{\sf out}\ifempty{#1}{}{[{#1}]}({#2}): {#3}}
+% txVal no longer used (except in the background)
+\newcommand{\txVal}[2][]{{\sf val}\ifempty{#1}{\ifempty{#2}{}{: {#2}}}{[{#1}]: {#2}}}
+\newcommand{\txAfterAbs}[2][]{{\sf absLock}\ifempty{#1}{\ifempty{#2}{}{: {#2}}}{({#1})\ifempty{#2}{}{: {#2}}}}
+\newcommand{\txAfterRel}[2][]{{\sf relLock}\ifempty{#1}{\ifempty{#2}{}{: {#2}}}{({#1})\ifempty{#2}{}{: {#2}}}}
+\newcommand{\txNullOut}{{\sf null_{out}}}
+
+\DeclareMathAlphabet{\mathbfsf}{\encodingdefault}{\sfdefault}{bx}{n}
+
+\newcommand{\bcB}[1][]{{\mathbfsf{\txColor{B}}}_{#1}}
+\newcommand{\bcBi}[1][]{{\mathbfsf{\txColor{B}'}}_{#1}}
+\newcommand{\bcBii}[1][]{{\mathbfsf{\txColor{B}''}}_{#1}}
+\newcommand{\bcAt}[2]{(#1, #2)}
+\newcommand{\consistent}{\rhd}
+\newcommand{\notConsistent}{\centernot{\rhd}}
+
+
+% Transaction templates
+\newcommand{\templT}[1][]{\txFmt{\ifempty{#1}{t}{{t}_{#1}}}}
+\newcommand{\templTi}[1][]{\txFmt{\ifempty{#1}{t'}{{t'}_{#1}}}}
+
+\newcommand{\txVariant}[2][]{{\it #2} \ifempty{#1}{}{\ensuremath{\langle {#1} \rangle}}}
+
+
+\newcommand{\secteal}{\texttt{secteal}\xspace}% Smart contract language
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               MACROS FOR ALGORAND META-VARIABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Identities
+
+\def\pmvColor{\color{ForestGreen}}
+\newcommand{\pmvFmt}[1]{{\pmvColor{\sf #1}}}
+\newcommand{\pmv}[2][]{\pmvFmt{#2}_{\pmvColor{#1}}\xspace}
+\newcommand{\pmvA}[1][]{\pmv[{#1}]{a}}
+\newcommand{\pmvB}[1][]{\pmv[{#1}]{b}}
+\newcommand{\pmvC}[1][]{\pmv[{#1}]{c}}
+
+\newcommand{\pmvAS}[1][]{\pmv[{#1}]{A}}
+\newcommand{\pmvBS}[1][]{\pmv[{#1}]{B}}
+\newcommand{\pmvCS}[1][]{\pmv[{#1}]{C}}
+
+\newcommand{\pmvAL}[1][]{\pmv[{#1}]{\mathcal{A}}}
+\newcommand{\pmvBL}[1][]{\pmv[{#1}]{\mathcal{B}}}
+\newcommand{\pmvCL}[1][]{\pmv[{#1}]{\mathcal{C}}}
+
+% set of all identities
+\newcommand{\PmvU}{{\pmvColor{\mathbb{K}}}}
+\newcommand{\Adv}{\pmv{Adv}} % adversary
+
+% runs
+\newcommand{\runnameS}{\mathcal{R}}
+\newcommand{\runnameC}{\mathcal{C}}
+
+\newcommand{\runS}[1][]{\runnameS_{#1}}
+\newcommand{\runSi}[1][]{\runnameS'_{#1}}
+\newcommand{\runSii}[1][]{\runnameS''_{#1}}
+
+\newcommand{\runC}[1][]{\runnameC_{#1}}
+\newcommand{\runCi}[1][]{\runnameC'_{#1}}
+\newcommand{\runCii}[1][]{\runnameC''_{#1}}
+
+% strategies
+\newcommand{\stratS}[1]{\Sigma_{#1}}
+\newcommand{\stratC}[1]{\Sigma_{#1}^{\it c}}
+
+\newcommand{\stratSet}{\mathbf{\Sigma}} % set of strategies
+
+
+%%% Values
+
+\newcommand{\val}[2][]{#2_{#1}} % values
+\newcommand{\valV}[1][]{\val[#1]{v}}
+\newcommand{\valVi}[1][]{\val[#1]{v'}}
+
+\newcommand{\valVL}[1][]{\val[#1]{\mathcal{V}}}
+\newcommand{\valViL}[1][]{\val[#1]{\mathcal{V}'}}
+
+% \usepackage{mathrsfs}
+
+\newcommand{\wit}[2][]{#2_{#1}} % arguments (witnesses)
+\newcommand{\witW}[1][]{\wit[#1]{w}}
+\newcommand{\witWi}[1][]{\wit[#1]{w'}}
+\newcommand{\witWL}[1][]{\wit[#1]{\mathcal{W}}}
+\newcommand{\witWLi}[1][]{\wit[#1]{\mathcal{W}'}}
+\newcommand{\witWLL}[1][]{\wit[#1]{\mathbf{W}}}
+\newcommand{\witWLLi}[1][]{\wit[#1]{\mathbf{W}'}}
+
+\def\timeColor{\color{black}}
+
+\newcommand{\timeT}[1][]{\timeColor{r_{#1}}}
+\newcommand{\timeTi}[1][]{\timeColor{r'_{#1}}}
+\newcommand{\timeTmax}[1][]{\timeColor{r_{\it max}}}
+\newcommand{\timeTinit}[1][]{\timeColor{r_{\it init}}}
+
+\newcommand{\leaseN}[1][]{n_{#1}}
+\newcommand{\leaseMap}{f_{\textit{lx}}}
+\newcommand{\leaseMapi}{f'_{\textit{lx}}}
+
+\newcommand{\freezeMap}{f_{\textit{frz}}}
+\newcommand{\freezeMapi}{f'_{\textit{frz}}}
+
+\newcommand{\leaseUpdate}[3]{\textit{upd}({#1},{#2},{#3})}
+
+\newcommand{\timeOk}[2]{{#1} \models {#2}}
+
+
+%%% Actions
+
+\def\actColor{\color{magenta}}
+\newcommand{\actFmt}[1]{{\actColor{#1}}}
+\newcommand{\act}[2][]{\actFmt{#2}_{\actColor{#1}}\xspace}
+\newcommand{\actL}[1][]{\act[{#1}]{t}}
+\newcommand{\actLi}[1][]{\act[{#1}]{t'}}
+
+\newcommand{\actf}{\actFmt{\sf f}} % action field
+
+\newcommand{\actLS}[1][]{\act[{#1}]{T}}
+\newcommand{\actLiS}[1][]{\act[{#1}]{T'}}
+\newcommand{\actLSdec}[2][]{{\actFmt{T}_{#1}^{\actColor{\it #2}}}} % with decoration
+
+\newcommand{\actLL}[1][]{\act[{#1}]{\mathcal{T}}}
+\newcommand{\actLLi}[1][]{\act[{#1}]{\mathcal{T}'}}
+
+% set of all transactions
+\newcommand{\ActU}{{\actFmt{\mathbb{T}}}}
+
+\newcommand{\actOpen}{\actFmt{\it open}}
+\newcommand{\actPay}{\actFmt{\it pay}}
+\newcommand{\actClose}{\actFmt{\it close}}
+% payClose(x,y,z,v,tau) = < pay(x,y,v,tau) close(x,z,tau) >
+\newcommand{\actGen}{\actFmt{\it gen}}
+\newcommand{\actOptin}{\actFmt{\it optin}}
+\newcommand{\actBurn}{\actFmt{\it burn}}
+\newcommand{\actFreeze}{\actFmt{\it frz}}
+\newcommand{\actUnfreeze}{\actFmt{\it unfrz}}
+\newcommand{\actRevoke}{\actFmt{\it rvk}}
+\newcommand{\actDelegate}{\actFmt{\it delegate}}
+
+\newcommand{\actType}{{\actColor{\sf type}}}
+\newcommand{\actSnd}{{\actColor{\sf snd}}}
+\newcommand{\actRcv}{{\actColor{\sf rcv}}}
+\newcommand{\actTok}{{\actColor{\sf asst}}}
+\newcommand{\actAmt}{{\actColor{\sf val}}}
+\newcommand{\actTf}{{\actColor{\sf fv}}}
+\newcommand{\actTl}{{\actColor{\sf lv}}}
+\newcommand{\actLease}{{\actColor{\sf lx}}}
+
+\newcommand{\actDupSet}{{\actColor{T_{K}}}}
+\newcommand{\actDupSeti}{{\actColor{T'_{K}}}}
+
+%%% Labels
+
+\def\labColor{\color{magenta}}
+\newcommand{\labFmt}[1]{{\labColor{#1}}}
+\newcommand{\lab}[2][]{\labFmt{#2}_{\labColor{#1}}\xspace}
+\newcommand{\labS}[1][]{\act[{#1}]{\ell}}
+\newcommand{\labSi}[1][]{\act[{#1}]{\ell'}}
+\newcommand{\labTime}{\timeColor{\checkmark}} % tick rule
+
+\newcommand{\adv}[1]{?{#1}}
+\newcommand{\auth}[2]{{#1}{:}{#2}}
+\newcommand{\authver}[2]{{#1} \models {#2}}
+
+% set of all labels
+\newcommand{\LabU}{{\tokColor{\mathbb{L}}}}
+
+
+%%% Assets
+
+\def\tokColor{\color{MidnightBlue}}
+\newcommand{\tokFmt}[1]{{\tokColor{#1}}}
+\newcommand{\tok}[2][]{\tokFmt{#2}_{\tokColor{#1}}\xspace}
+\newcommand{\tokT}[1][]{\tok[{#1}]{\tau}}
+\newcommand{\tokTi}[1][]{\tok[{#1}]{\tau'}}
+
+\newcommand{\tokTS}[1][]{\tok[{#1}]{T}}
+\newcommand{\tokTiS}[1][]{\tok[{#1}]{T'}}
+
+\newcommand{\tokTL}[1][]{\tok[{#1}]{\mathcal{T}}}
+\newcommand{\tokTiL}[1][]{\tok[{#1}]{\mathcal{T}'}}
+
+\newcommand{\tokMngr}[2][]{{\tokColor{\it auth}}({#2},{#1})}
+\newcommand{\mngrMap}{f_{\textit{mngr}}}
+\newcommand{\mngrMapi}{f'_{\textit{mngr}}}
+
+\newcommand{\ALGO}{\mbox{\tokColor{\text{\textsf{Algo}}}}}
+\newcommand{\muALGO}{\mbox{\tokColor{$\mu$Algo}}}
+\newcommand{\TokU}{{\tokColor{\mathbb{A}}}}
+
+\newcommand{\tokval}[3][]{\mathit{val}^{#1}_{{#2}}\ifempty{#3}{}{({#3})}}
+\newcommand{\genval}[2]{\mathit{minted}_{{#1}}\ifempty{#2}{}{({#2})}}
+\newcommand{\burnval}[2]{\mathit{burnt}_{{#1}}\ifempty{#2}{}{({#2})}}
+
+
+%%% Addresses
+
+\def\addrColor{\color{ForestGreen}}
+\newcommand{\addrFmt}[1]{{\addrColor{\mathbf{#1}}}}
+\newcommand{\addr}[2][]{\addrFmt{#2}_{\addrColor{#1}}\xspace}
+\newcommand{\addrX}[1][]{\addr[{#1}]{x}}
+\newcommand{\addrXi}[1][]{\addr[{#1}]{x'}}
+\newcommand{\addrY}[1][]{\addr[{#1}]{y}}
+\newcommand{\addrYi}[1][]{\addr[{#1}]{y'}}
+\newcommand{\addrZ}[1][]{\addr[{#1}]{z}}
+\newcommand{\addrZi}[1][]{\addr[{#1}]{z'}}
+\newcommand{\addrInit}{\pmvA[0]}
+
+% Basic addresses (identities or scripts)
+\newcommand{\baddrX}[1][]{\addr[{#1}]{p}}
+\newcommand{\baddrXS}[1][]{\addr[{#1}]{p}}
+\newcommand{\baddrXL}[1][]{\addr[{#1}]{\mathcal{P}}}
+
+\newcommand{\addrXS}[1][]{\addr[{#1}]{X}}
+\newcommand{\addrXiS}[1][]{\addr[{#1}]{X'}}
+\newcommand{\addrYS}[1][]{\addr[{#1}]{Y}}
+\newcommand{\addrYiS}[1][]{\addr[{#1}]{Y'}}
+\newcommand{\addrZS}[1][]{\addr[{#1}]{Z}}
+\newcommand{\addrZiS}[1][]{\addr[{#1}]{Z'}}
+
+\newcommand{\addrXL}[1][]{\addr[{#1}]{\mathcal{X}}}
+\newcommand{\addrXiL}[1][]{\addr[{#1}]{\mathcal{X}'}}
+\newcommand{\addrYL}[1][]{\addr[{#1}]{\mathcal{Y}}}
+\newcommand{\addrYiL}[1][]{\addr[{#1}]{\mathcal{Y}'}}
+\newcommand{\addrZL}[1][]{\addr[{#1}]{\mathcal{Z}}}
+\newcommand{\addrZiL}[1][]{\addr[{#1}]{\mathcal{Z}'}}
+
+% set of all addresses
+\newcommand{\AddrU}{{\addrColor{\mathbb{X}}}}
+
+%%% Signatures
+
+\def\sigColor{\color{ForestGreen}}
+\newcommand{\sigFmt}[1]{{\sigColor{#1}}}
+\newcommand{\sigA}[1][]{\sigFmt{s_{{#1}}}}
+\newcommand{\sigAS}[1][]{\sigFmt{S_{{#1}}}}
+\newcommand{\sigAL}[1][]{\sigFmt{\mathcal{S}_{{#1}}}}
+
+
+%%% Accounts
+
+\newcommand{\tokMapS}[1][]{{\tokColor{\sigma_{#1}}}}
+\newcommand{\tokMapSi}[1][]{{\tokColor{\sigma'_{#1}}}}
+\newcommand{\tokMapSii}[1][]{{\tokColor{\sigma''_{#1}}}}
+
+\newcommand{\acct}[2]{{#1}{\tokColor{[{#2}]}}}
+
+\newcommand{\acctOk}[1]{\models {#1}}
+
+% set of all accounts
+\newcommand{\AcctU}{{\acctColor{\mathbb{A}}}}
+
+
+%%% Configurations
+
+\def\confColor{\color{ForestGreen}}
+\newcommand{\conf}[2][]{{\confColor{{#2}_{#1}}}}
+\newcommand{\confG}[1][]{\conf[{#1}]{\Gamma}}
+\newcommand{\confGi}[1][]{\conf[{#1}]{\Gamma'}}
+\newcommand{\confGii}[1][]{\conf[{#1}]{\Gamma''}}
+\newcommand{\confD}{\conf{\Delta}}
+\newcommand{\confDi}{\conf{\Delta'}}
+\newcommand{\confK}[1][]{\conf[{#1}]{K}}
+\newcommand{\confKi}[1][]{\conf[{#1}]{K'}}
+\newcommand{\confKii}[1][]{\conf[{#1}]{K''}}
+\newcommand{\confSep}{\mid}
+
+\newcommand{\confNil}{\conf{0}}
+
+\newcommand{\confTime}[1]{{\it time}\ifempty{#1}{}{({#1})}}
+
+
+\newcommand{\step}[1]{\xrightarrow{#1}_1}
+\newcommand{\stepL}[1]{\xrightarrow{#1}}
+\newcommand{\stepK}[1]{\xrightarrow{#1}}
+% top-level step
+\newcommand{\stepTL}[1]{\xRightarrow{#1}}
+
+%%% Scripts
+
+\def\scriptColor{\color{Plum}}
+\newcommand{\script}[2][]{{\scriptColor{{\it #2}_{#1}}}}
+\newcommand{\scriptE}[1][]{\script[{#1}]{e}}
+\newcommand{\scriptEi}[1][]{\script[{#1}]{e'}}
+
+% set of all scripts
+\newcommand{\ScriptU}{{\scriptColor{\mathbb{S}}}}
+
+\newcommand{\addrContr}[1]{{\scriptColor{#1}}}
+
+\newcommand{\actE}[2][]{\script{\sf tx}\ifempty{#1}{}{({#1})}.{#2}}
+\newcommand{\argE}[1]{\script{\sf arg}\ifempty{#1}{}{({#1})}}
+\newcommand{\actLen}{\script{\sf txlen}}
+\newcommand{\argLen}{\script{\sf arglen}}
+\newcommand{\actPos}{\script{\sf txpos}}
+\newcommand{\actId}[1][]{\script{\sf txid}\ifempty{#1}{}{({#1})}}
+\newcommand{\versigname}{\script{\sf versig}}
+\newcommand{\versig}[3]{{\versigname}({#1},{#2},{#3})}
+\newcommand{\verpreimgname}{\script{\sf verpreimg}}
+\newcommand{\verpreimg}[2]{{\verpreimgname}({#1},{#2})}
+\newcommand{\hashE}[1]{\script{\sf H}(#1)}
+
+\newcommand{\op}[3]{\ensuremath{#2\mathbin\textsf{#1}#3}}
+\newcommand{\notE}{{\sf not}~}
+\newcommand{\sizeE}[1]{\script{\sf size}({#1})}
+\newcommand{\ifE}[3]{\script{\mathsf{if}}~{#1}~\script{\mathsf{then}}~{#2}~\script{\mathsf{else}}~{#3}}
+\newcommand{\ifTE}[2]{\script{\mathsf{if}}~{#1}~\script{\mathsf{then}}~{#2}}
+\newcommand{\elseE}[1]{{\mathsf{else}}~{#1}}
+\newcommand{\andE}{~{\sf and}~}
+\newcommand{\orE}{~{\sf or}~}
+
+\newcommand{\redeems}[1]{\overset{#1}{\leadsto}}
+\newcommand{\notRedeems}[1]{\centernot{\overset{#1}{\leadsto}}}
+\newcommand{\scriptverify}{\models}
+\newcommand{\true}{\mathit{true}}
+\newcommand{\false}{\mathit{false}}
+
+
+%%% Semantics
+
+\newcommand{\irule}[2]{\dfrac{#1}{#2}}
+
+% \newcommand{\irule}[2]{
+%   \begin{array}{c}
+%     {#1}  \\ \hline
+%     {#2}
+%   \end{array}}
+
+\newcommand{\subs}[2]{\{\nicefrac{#1}{#2}\}}
+
+\newcommand{\sem}[3]{\mbox{\ensuremath{\llbracket{#3}\rrbracket_{#1}^{#2}}}}
+\newcommand{\opSem}[3]{\ensuremath{#2~\mathit{#1}~#3}}
+\newcommand{\notSem}[1]{\mathit{not}~#1}
+\newcommand{\hashSem}[1]{\ifempty{#1}{H}{H(#1)}}
+\newcommand{\ifSem}[3]{\mathit{if}~{#1}~\mathit{then}~{#2}~\mathit{else}~{#3}}
+\newcommand{\versigSem}[3]{{\mathit{ver}}_{#1}({#2},{#3})}
+\newcommand{\sizeSem}[1]{\mathit{size}({#1})}
+
+\newcommand{\sidebyside}[2]{
+  \begin{tabular}{ll}
+    \begin{minipage}{.5\linewidth} {#1}  \end{minipage}
+    &
+    \begin{minipage}{.5\linewidth} {#2}  \end{minipage}
+  \end{tabular}
+}
+
+\newcommand{\mapstopart}{\rightharpoonup}
+
+\newcommand{\bnfdef}{\Coloneqq}
+% \newcommand{\bnfmid}{\;\big|\;}
+\newcommand{\bnfmid}{\;|\;}
+
+\newcommand{\nrule}[1]{{\scriptsize \textsc{#1}}}
+\newcommand{\smallnrule}[1]{{\tiny \textsc{#1}}}
+
+\newcommand{\dom}[1]{\operatorname{dom} {#1}}
+\newcommand{\ran}[1]{\operatorname{ran} {#1}}
+\newcommand{\cod}[1]{\operatorname{cod} {#1}}
+
+% \newcommand{\domSub}{\mbox{\ensuremath{\lhd\mkern-14mu-}}} % domain subtraction
+
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\Int}{\mathbb{Z}}
+
+% \newcommand{\powset}[1]{\wp(#1)}
+\newcommand{\powset}[1]{2^{#1}}
+%\newcommand{\bind}[2]{\nicefrac{#2}{#1}}
+\newcommand{\bind}[2]{{#1} \!\mapsto\! {#2}}
+\newcommand{\setenum}[1]{\{#1\}}
+\newcommand{\setcomp}[2]{\left\{{#1} \,\middle|\, {#2}\right\}}
+% \newcommand{\setcomp}[2]{\{{#1} \,\mid\, {#2}\}}
+\newcommand{\entails}{\vdash}
+\newcommand{\seq}[1]{\langle {#1} \rangle}
+\newcommand{\seqat}[2]{{#1}.{#2}}
+
+% \newcommand{\setofseq}[1]{\widehat{#1}}
+\newcommand{\setofseq}[1]{\mathit{set}({#1})}
+
+\newenvironment{barttheorem}[2][]{\noindent\textbf{{#2}{#1}.}\it}{}
+\newenvironment{bartproof}[1]{\noindent\textbf{Proof of~#1.}}{\smallskip}
+\newenvironment{bartdef}[1]{\noindent\begin{minipage}{\textwidth}\bigskip\begin{
+definition}\textnormal{\textbf{#1}} \\ \hbra \begin{center} \begin{minipage}{\gn
+at}}{\end{minipage}\end{center} \hket\end{definition}\medskip\end{minipage}}
+
+% \newcounter{fact}
+\spnewtheorem{notation}{Notation}{\bfseries}{\rmfamily}
+% \spnewtheorem{counterexample}{Counterexample}{\itshape}{\rmfamily}
+
+%\def\endex{{\unskip\nobreak\hfil
+%\penalty50\hskip1em\null\nobreak\hfil$\blacklozenge$
+%\parfillskip=0pt\finalhyphendemerits=0\endgraf}}
+\def\endex{\qed}
+
+\newcommand{\error}[1]{\textcolor{BrickRed}{#1}}
+\newcommand{\warning}[1]{\textcolor{BurntOrange}{#1}}
+\newcommand{\info}[1]{\textcolor{NavyBlue}{#1}}
+
+%\crefname{appendix}{appendix}{appendices}
+%\Crefname{appendix}{Appendix}{Appendices}
+%\crefname{notation}{notation}{notations}
+%\Crefname{notation}{Notation}{Notations}
+
+% colors
+\definecolor{LightGrey}{rgb}{0.95,0.95,0.95}
+\definecolor{keyword}{HTML}{7F0055}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Tabular dashed line
+\newlength\replength
+\newcommand\repfrac{.1}
+\newcommand\dashfrac[1]{\renewcommand\repfrac{#1}}
+\setlength\replength{2.5pt}
+\newcommand\rulewidth{.6pt}
+\newcommand\tdashfill[1][\repfrac]{\cleaders\hbox to \replength{%
+  \smash{\rule[\arraystretch\ht\strutbox]{\repfrac\replength}{\rulewidth}}}\hfill}
+\newcommand\tabdashline{%
+  \makebox[0pt][r]{\makebox[\tabcolsep]{\tdashfill\hfil}}\tdashfill\hfil%
+  \makebox[0pt][l]{\makebox[\tabcolsep]{\tdashfill\hfil}}%
+  \\[-\arraystretch\dimexpr\ht\strutbox+\dp\strutbox\relax]%
+}
+\newcommand\tdotfill[1][\repfrac]{\cleaders\hbox to \replength{%
+  \smash{\raisebox{\arraystretch\dimexpr\ht\strutbox-.1ex\relax}{.}}}\hfill}
+\newcommand\tabdotline{%
+  \makebox[0pt][r]{\makebox[\tabcolsep]{\tdotfill\hfil}}\tdotfill\hfil%
+  \makebox[0pt][l]{\makebox[\tabcolsep]{\tdotfill\hfil}}%
+  \\[-\arraystretch\dimexpr\ht\strutbox+\dp\strutbox\relax]%
+}
+%% End tabular dashed line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\var}[2][]{#2_{#1}} % variables
+\newcommand{\varX}[1][]{\var[#1]{x}} 
+\newcommand{\varY}[1][]{\var[#1]{y}} 
+\newcommand{\varZ}[1][]{\var[#1]{z}}
+\newcommand{\varT}[1][]{\var[#1]{x}} % transaction variable
+\newcommand{\varSig}[1][]{\var[#1]{\varsigma}} %change me
+\newcommand{\varSigi}{\varSig'}
+
+\newcommand{\const}[2][]{#2_{#1}} % constants
+\newcommand{\constK}[1][]{\const[#1]{k}}
+\newcommand{\constKi}[1][]{\const[#1]{k'}}
+\newcommand{\constT}[1][]{\const[#1]{t}}
+\newcommand{\constTi}[1][]{\const[#1]{t'}}
+\newcommand{\constTii}[1][]{\const[#1]{t''}}
+\newcommand{\constD}[1][]{\const[#1]{d}}
+\newcommand{\constDi}[1][]{\const[#1]{d'}}

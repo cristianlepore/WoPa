@@ -1,0 +1,154 @@
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\usepackage{centernot}
+\usepackage{hhline}
+
+\usepackage[mathcal]{euscript}% Better mathcal font
+
+\usepackage{siunitx}
+\usepackage{textcomp}
+\usepackage{caption}
+\usepackage{pst-func}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{environ}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{shadows}
+\usepackage{mathtools}
+\usepackage{array,multirow}
+\usepackage[hyphens]{url}
+\usepackage{cite}
+\usepackage{pgfplotstable}
+\usepackage{threeparttable}
+
+\usepackage{etoolbox}
+\usepackage{arydshln}
+
+\usepackage{lineno}
+
+% \usepackage{fixltx2e} % Text mode subscript and superscript
+\usepackage{xspace} % Smart spaces after commands
+ 
+\usepackage{dirtytalk} % for \say command
+\usepackage{stmaryrd} % for llbracket and rrbracket\textbf{\textbf{}}
+
+% For custom alignment in itemize and description
+\usepackage[inline,shortlabels]{enumitem} 
+\newlist{inlinelist}{enumerate*}{1}
+\setlist*[inlinelist,1]{%
+  label=(\roman*),
+}
+
+\usepackage{xifthen}  % Extended conditional commands
+\usepackage{ifthen}
+
+\usepackage{nicefrac}
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+\usepackage{bigints}
+
+\usetikzlibrary{pgfplots.dateplot}
+\usetikzlibrary{matrix,chains,positioning,decorations.pathreplacing}
+\usetikzlibrary{patterns,calc,fit,arrows}
+\usetikzlibrary{shapes.geometric}
+
+\usepackage[draft,margin,index]{fixme} % Simplified management of FIXME's
+\fxusetheme{color}
+
+\FXRegisterAuthor{bart}{anbart}{\color{magenta} {\underline{bart}}}
+\FXRegisterAuthor{zun}{anzun}{\color{red} {\underline{zun}}}
+\FXRegisterAuthor{alc}{analc}{\color{blue} {\underline{alc}}}
+\FXRegisterAuthor{and}{anand}{\color{ForestGreen} {\underline{abb}}}
+
+\hypersetup{
+  breaklinks   = true,
+  colorlinks   = true, %Colours links instead of ugly boxes
+  urlcolor     = blue, %Colour for external hyperlinks
+  linkcolor    = blue, %Colour of internal links
+  citecolor    = red   %Colour of citations
+}
+\hypersetup{final} % Needed to generate hyperlinks even in draft mode (ERROR IN MAC)
+
+\usepackage{listings}
+% \usepackage{minted} % Source code highlighting
+% \makeatletter	%minted fix for background%
+% \patchcmd{\minted@colorbg}{\noindent}{\medskip\noindent}{}{}
+% \apptocmd{\endminted@colorbg}{\par\medskip}{}{}
+% \makeatother
+% \usemintedstyle{autumn}
+\definecolor{listingBG}{HTML}{FFFFCB}%
+\definecolor{listingFrame}{HTML}{BBBB98}%
+\definecolor{listingLineno}{rgb}{0.5,0.5,1.0}%
+% \textcolor[rgb]{0.5,0.5,1.0}{\tiny\oldstylenums{\arabic{FancyVerbLine}}}}
+
+\renewcommand{\ttdefault}{lmtt}  % to use bold and italic within code
+
+\definecolor{LightGrey}{rgb}{0.975,0.975,0.975}
+% \definecolor{keyword}{HTML}{7F0055}
+
+% Packages initialization
+%
+\lstset{
+	nolol=true,
+	breaklines=true,
+	xleftmargin=3pt,
+	xrightmargin=3pt,
+	framexleftmargin=5pt,
+	framextopmargin=2pt,
+	% framexrightmargin=10pt,
+	framexbottommargin=2pt, 
+	frame=ltbr, framerule=0pt,
+	showstringspaces=false,
+	basicstyle=\fontseries{m}\scriptsize\ttfamily,
+	% backgroundcolor=\color{LightGrey},
+        numberstyle=\fontsize{4}{4}\color{NavyBlue}\ttfamily,
+        stringstyle=\color{RoyalBlue}
+}
+
+\lstdefinelanguage{btm}{
+	commentstyle=\color{Gray},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	classoffset=0,
+        escapechar=\$,
+	morekeywords={transaction,input,output,key,network,package},
+	keywordstyle=\color{Blue}\bfseries,
+	classoffset=1,
+	morekeywords={sig,versig,fun,unit,int,string,bool,address,uint},
+	keywordstyle=\color{TealBlue},
+	classoffset=2,
+	morekeywords={BTC,true},
+	keywordstyle=\color{Plum}\bfseries,
+}
+
+\lstdefinelanguage{solidity}{
+	commentstyle=\color{Gray},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	classoffset=0,
+        escapechar=\$,
+	morekeywords={struct,mapping,function,this,public,private,static,final,class,extends,switch,case,break,finally,try,catch,return,if,else,new},
+	keywordstyle=\color{Blue}\bfseries,
+	classoffset=1,
+	morekeywords={unit,int,string,bool,address,uint},
+	keywordstyle=\color{TealBlue},
+	classoffset=2,
+	morekeywords={ether,wei,finney,contract,send,throw,msg,sender,value},
+	keywordstyle=\color{Plum}\bfseries,
+}
+
+\lstdefinelanguage{java}{
+	escapechar=\$,
+        commentstyle=\color{Gray},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]",
+        classoffset=0,
+	morekeywords={public,private,static,final,class,extends,switch,case,break,finally,try,catch,void,int,boolean,throws,throw,return,if,else,new},
+	keywordstyle=\color{keyword}\bfseries
+}
